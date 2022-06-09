@@ -1,0 +1,15 @@
+services:
+  php:
+    image: knplabs/behat-training:php
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    volumes:
+      - ./:/app
+
+  chrome:
+    image: knplabs/behat-training:chrome
+    build:
+      context: ./docker/chrome
+    ports:
+      - 9222:9222

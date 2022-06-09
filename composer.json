@@ -1,0 +1,8 @@
+{
+    "name": "knplabs/behat-training",
+    "description": "Behat training",
+    "type": "project",
+    "autoload": {},
+    "require": {},
+    "require-dev": {}
+}
