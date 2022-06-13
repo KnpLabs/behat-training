@@ -11,6 +11,9 @@ RUN apt-get update \
         git \
         unzip
 
+RUN docker-php-ext-install -j"$(nproc)" pdo_mysql && \
+    rm -rf /tmp/pear
+
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_HOME /home/docker/composer
 
@@ -22,7 +25,6 @@ USER docker
 
 COPY composer.* /app/
 COPY features/ /app/features/
-COPY src/ /app/src/
 
 RUN composer install --prefer-dist --no-scripts --no-dev \
     && composer clear-cache

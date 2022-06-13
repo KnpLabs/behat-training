@@ -2,10 +2,17 @@ COMPOSE_PROJECT_NAME=behat-training
 
 
 .PHONY: start
-start: build up install-dependencies
+start: build up install-dependencies init-database
 
 .PHONY: stop
 stop: down
+
+.PHONY: run
+run:
+ifeq ($(CMD),)
+	$(error You have to provide a command to execute)
+endif
+	docker exec -it $(shell docker ps -q --filter name=$(COMPOSE_PROJECT_NAME)_php) $(CMD)
 
 .PHONY: behat
 behat:
@@ -29,12 +36,10 @@ up:
 install-dependencies:
 	docker exec -it $(shell docker ps -q --filter name=$(COMPOSE_PROJECT_NAME)_php) composer install --no-scripts
 
-.PHONY: run
-run:
-ifeq ($(CMD),)
-	$(error You have to provide a command to execute)
-endif
-	docker exec -it $(shell docker ps -q --filter name=$(COMPOSE_PROJECT_NAME)_php) $(CMD)
+.PHONY: init-db
+init-database:
+	docker exec -it $(shell docker ps -q --filter name=$(COMPOSE_PROJECT_NAME)_php) bin/console --no-interaction doctrine:database:create --if-not-exists
+	docker exec -it $(shell docker ps -q --filter name=$(COMPOSE_PROJECT_NAME)_php) bin/console --no-interaction doctrine:migrations:migrate
 
 .PHONY: down
 down:
