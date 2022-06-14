@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Behat;
 
-use Behat\Behat\Tester\Exception\PendingException;
 use App\Entity\User;
 use App\Tests\Behat\Helper\Doctrine;
 use Behat\Behat\Context\Context;
@@ -32,5 +31,13 @@ final class FeatureContext implements Context
         $this->doctrine->save(
             new User($email, 'password')
         );
+    }
+
+    /**
+     * @Given I wait :seconds seconds
+     */
+    public function iWaitSeconds($seconds)
+    {
+        sleep((int) $seconds);
     }
 }
