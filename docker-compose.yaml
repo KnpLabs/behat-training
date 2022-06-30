@@ -1,6 +1,6 @@
 services:
   nginx:
-    image: knplabs/behat-training:nginx
+    image: knplabs/symfony-training:nginx
     build:
       context: .
       dockerfile: docker/nginx/Dockerfile
@@ -11,7 +11,7 @@ services:
       - 80:80
 
   php:
-    image: knplabs/behat-training:php
+    image: knplabs/symfony-training:php
     build:
       context: .
       dockerfile: docker/php/Dockerfile
@@ -19,21 +19,14 @@ services:
       - ./:/app
 
   mysql:
-    image: knplabs/behat-training:database
+    image: knplabs/symfony-training:database
     build:
       context: ./docker/mysql
     environment:
-      - MYSQL_DATABASE=behat-training
+      - MYSQL_DATABASE=symfony-training
       - MYSQL_ROOT_PASSWORD=root
     volumes:
       - 'database:/var/lib/mysql'
-
-  chrome:
-    image: knplabs/behat-training:chrome
-    build:
-      context: ./docker/chrome
-    ports:
-      - 9222:9222
 
 volumes:
   database: {}

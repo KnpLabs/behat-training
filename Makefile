@@ -1,4 +1,4 @@
-COMPOSE_PROJECT_NAME=behat-training
+COMPOSE_PROJECT_NAME=symfony-training
 
 
 .PHONY: start
@@ -13,14 +13,6 @@ ifeq ($(CMD),)
 	$(error You have to provide a command to execute)
 endif
 	docker exec -it $(shell docker ps -q --filter name=$(COMPOSE_PROJECT_NAME)_php) $(CMD)
-
-.PHONY: behat
-behat:
-	docker exec -it $(shell docker ps -q --filter name=$(COMPOSE_PROJECT_NAME)_php) ./vendor/bin/behat $(ARGS)
-
-.PHONY: crawler
-crawler:
-	docker exec -it $(shell docker ps -q --filter name=$(COMPOSE_PROJECT_NAME)_php) php -f src/crawler.php
 
 ###############################################################################
 

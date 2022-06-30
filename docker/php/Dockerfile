@@ -24,7 +24,6 @@ RUN useradd docker -d /home/docker -u 1000 && \
 USER docker
 
 COPY composer.* /app/
-COPY features/ /app/features/
 
 RUN composer install --prefer-dist --no-scripts --no-dev \
     && composer clear-cache
